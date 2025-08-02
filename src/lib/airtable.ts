@@ -1,5 +1,5 @@
 import Airtable from 'airtable';
-import { Tool, AirtableRecord } from '@/types/tool';
+import { Tool } from '@/types/tool';
 
 // Configure Airtable
 Airtable.configure({
@@ -11,7 +11,9 @@ const base = Airtable.base(process.env.AIRTABLE_BASE_ID || 'placeholder_base');
 const table = base(process.env.AIRTABLE_TABLE_NAME || 'Tools');
 
 // Helper function to transform Airtable record to Tool interface
-function transformRecord(record: any): Tool {
+// Using any here to work with Airtable's type constraints
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function transformRecord(record: Airtable.Record<any>): Tool {
   return {
     id: record.id,
     name: record.fields.Name || '',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Tool } from '@/types/tool';
 import { getAllTools } from '@/lib/airtable';
@@ -8,7 +8,7 @@ import ToolFilter from '@/components/ToolFilter';
 import ToolGrid from '@/components/ToolGrid';
 import SearchBar from '@/components/SearchBar';
 
-export default function ToolsPage() {
+function ToolsContent() {
   const searchParams = useSearchParams();
   const [tools, setTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
@@ -113,5 +113,27 @@ export default function ToolsPage() {
         <ToolGrid tools={filteredTools} />
       </div>
     </div>
+  );
+}
+
+export default function ToolsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-8">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+            <div className="h-20 bg-gray-200 rounded mb-8"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="h-80 bg-gray-200 rounded-lg"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <ToolsContent />
+    </Suspense>
   );
 }
