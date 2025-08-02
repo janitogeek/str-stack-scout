@@ -3,9 +3,11 @@ import ToolCard from './ToolCard';
 
 interface ToolGridProps {
   tools: Tool[];
+  onCompare?: (tool: Tool) => void;
+  comparedToolIds?: string[];
 }
 
-export default function ToolGrid({ tools }: ToolGridProps) {
+export default function ToolGrid({ tools, onCompare, comparedToolIds = [] }: ToolGridProps) {
   if (tools.length === 0) {
     return (
       <div className="text-center py-12">
@@ -25,7 +27,12 @@ export default function ToolGrid({ tools }: ToolGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {tools.map((tool) => (
-        <ToolCard key={tool.id} tool={tool} />
+        <ToolCard 
+          key={tool.id} 
+          tool={tool} 
+          onCompare={onCompare}
+          isComparing={comparedToolIds.includes(tool.id)}
+        />
       ))}
     </div>
   );

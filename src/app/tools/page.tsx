@@ -2,24 +2,41 @@
 
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Tool } from '@/types/tool';
+import { Tool, ToolFilters } from '@/types/tool';
 import { getAllTools } from '@/lib/airtable';
 import ToolFilter from '@/components/ToolFilter';
 import ToolGrid from '@/components/ToolGrid';
 import SearchBar from '@/components/SearchBar';
+import ToolComparison, { useToolComparison } from '@/components/ToolComparison';
 
 function ToolsContent() {
   const searchParams = useSearchParams();
   const [tools, setTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedSubcategory, setSelectedSubcategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Enhanced filters state
+  const [filters, setFilters] = useState<ToolFilters>({
+    subcategory: '',
+    pricingModel: '',
+    companySize: '',
+    targetMarket: '',
+    integrations: [],
+    minRating: 0,
+    searchTerm: ''
+  });
+
+  // Comparison functionality
+  const { comparisonTools, addToComparison, removeFromComparison, clearComparison } = useToolComparison();
 
   // Set initial category from URL parameters
   useEffect(() => {
     const category = searchParams.get('category');
     if (category) {
-      setSelectedSubcategory(decodeURIComponent(category));
+      setFilters(prev => ({
+        ...prev,
+        subcategory: decodeURIComponent(category)
+      }));
     }
   }, [searchParams]);
 
@@ -38,13 +55,55 @@ function ToolsContent() {
     fetchTools();
   }, []);
 
-  // Filter and search tools
+  // Get all unique integrations for filter dropdown
+  const allIntegrations = useMemo(() => {
+    const integrations = new Set<string>();
+    tools.forEach(tool => {
+      tool.integrations?.forEach(integration => integrations.add(integration));
+    });
+    return Array.from(integrations).sort();
+  }, [tools]);
+
+  // Enhanced filter and search logic
   const filteredTools = useMemo(() => {
     let filtered = tools;
 
     // Filter by subcategory
-    if (selectedSubcategory) {
-      filtered = filtered.filter(tool => tool.subcategory === selectedSubcategory);
+    if (filters.subcategory) {
+      filtered = filtered.filter(tool => tool.subcategory === filters.subcategory);
+    }
+
+    // Filter by pricing model
+    if (filters.pricingModel) {
+      filtered = filtered.filter(tool => tool.pricing?.model === filters.pricingModel);
+    }
+
+    // Filter by company size
+    if (filters.companySize) {
+      filtered = filtered.filter(tool => 
+        tool.companySize === filters.companySize || tool.companySize === 'All Sizes'
+      );
+    }
+
+    // Filter by target market
+    if (filters.targetMarket) {
+      filtered = filtered.filter(tool => tool.targetMarket === filters.targetMarket);
+    }
+
+    // Filter by integrations
+    if (filters.integrations.length > 0) {
+      filtered = filtered.filter(tool =>
+        filters.integrations.every(integration =>
+          tool.integrations?.includes(integration)
+        )
+      );
+    }
+
+    // Filter by minimum rating
+    if (filters.minRating > 0) {
+      filtered = filtered.filter(tool =>
+        tool.rating && tool.rating.score >= filters.minRating
+      );
     }
 
     // Filter by search term
@@ -54,12 +113,14 @@ function ToolsContent() {
         tool.name.toLowerCase().includes(searchLower) ||
         tool.subcategory.toLowerCase().includes(searchLower) ||
         tool.description.toLowerCase().includes(searchLower) ||
-        tool.tags.some(tag => tag.toLowerCase().includes(searchLower))
+        tool.tags.some(tag => tag.toLowerCase().includes(searchLower)) ||
+        tool.keyFeatures?.some(feature => feature.toLowerCase().includes(searchLower)) ||
+        tool.useCases?.some(useCase => useCase.toLowerCase().includes(searchLower))
       );
     }
 
     return filtered;
-  }, [tools, selectedSubcategory, searchTerm]);
+  }, [tools, filters, searchTerm]);
 
   if (loading) {
     return (
@@ -102,15 +163,27 @@ function ToolsContent() {
           />
         </div>
 
-        {/* Filter */}
+        {/* Enhanced Filter */}
         <ToolFilter
-          selectedSubcategory={selectedSubcategory}
-          onSubcategoryChange={setSelectedSubcategory}
+          filters={filters}
+          onFiltersChange={setFilters}
           toolsCount={filteredTools.length}
+          allIntegrations={allIntegrations}
         />
 
         {/* Tools Grid */}
-        <ToolGrid tools={filteredTools} />
+        <ToolGrid 
+          tools={filteredTools} 
+          onCompare={addToComparison}
+          comparedToolIds={comparisonTools.map(tool => tool.id)}
+        />
+
+        {/* Tool Comparison */}
+        <ToolComparison 
+          selectedTools={comparisonTools}
+          removeFromComparison={removeFromComparison}
+          clearComparison={clearComparison}
+        />
       </div>
     </div>
   );
