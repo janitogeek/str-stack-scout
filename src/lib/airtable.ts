@@ -1,5 +1,7 @@
 import Airtable from 'airtable';
 import { Tool } from '@/types/tool';
+import strProviders from '@/data/strProviders';
+import { convertProviderToTool } from '@/utils/dataImport';
 
 // Configure Airtable
 Airtable.configure({
@@ -79,170 +81,96 @@ export async function getToolsBySubcategory(subcategory: string): Promise<Tool[]
   }
 }
 
-// Mock data for development and testing
+// Mock data for development and testing - now includes comprehensive STR provider database
 function getMockTools(): Tool[] {
-  return [
-    {
-      id: 'rec1',
-      name: 'Hostfully',
-      subcategory: 'Property Management System (PMS)',
-      description: 'All-in-one property management solution for vacation rentals with booking management, guest communication, and operations tools.',
-      logoUrl: 'https://via.placeholder.com/120x120?text=HF',
-      websiteUrl: 'https://hostfully.com',
-      tags: ['PMS', 'STR-only', 'Automation', 'Multi-channel'],
-      region: 'Global',
-      integrations: ['Airbnb', 'VRBO', 'Booking.com'],
-      pricing: {
-        model: 'Paid',
-        startingPrice: '$49',
-        currency: 'USD',
-        billingCycle: 'Monthly'
-      },
-      companySize: 'All Sizes',
-      targetMarket: 'STR-only',
-      foundedYear: 2012,
-      rating: {
-        score: 4.5,
-        source: 'G2',
-        reviewCount: 234
-      },
-      keyFeatures: ['Property Management', 'Guest Communication', 'Channel Management', 'Reporting'],
-      useCases: ['Vacation Rental Management', 'Multi-property Operations', 'Guest Experience']
-    },
-    {
-      id: 'rec2',
-      name: 'PriceLabs',
-      subcategory: 'Revenue Management',
-      description: 'Dynamic pricing and revenue management solution for short-term rentals with market-based pricing recommendations.',
-      logoUrl: 'https://via.placeholder.com/120x120?text=PL',
-      websiteUrl: 'https://pricelabs.co',
-      tags: ['Revenue Management', 'Dynamic Pricing', 'STR-only'],
-      region: 'Global',
-      integrations: ['Airbnb', 'VRBO', 'Multiple PMS'],
-      pricing: {
-        model: 'Freemium',
-        startingPrice: '$19.99',
-        currency: 'USD',
-        billingCycle: 'Monthly'
-      },
-      companySize: 'Small Team',
-      targetMarket: 'STR-only',
-      foundedYear: 2014,
-      rating: {
-        score: 4.3,
-        source: 'Capterra',
-        reviewCount: 456
-      },
-      keyFeatures: ['Dynamic Pricing', 'Market Analysis', 'Revenue Optimization', 'Multi-calendar Sync'],
-      useCases: ['Revenue Optimization', 'Competitive Pricing', 'Seasonal Adjustments']
-    },
-    {
-      id: 'rec3',
-      name: 'Guesty',
-      subcategory: 'Property Management System (PMS)',
-      description: 'Professional property management platform for vacation rental managers and property management companies.',
-      logoUrl: 'https://via.placeholder.com/120x120?text=GU',
-      websiteUrl: 'https://guesty.com',
-      tags: ['PMS', 'Enterprise', 'Multi-channel'],
-      region: 'Global',
-      integrations: ['Airbnb', 'VRBO', 'Booking.com', 'Expedia'],
-      pricing: {
-        model: 'Enterprise',
-        startingPrice: 'Contact',
-        currency: 'USD',
-        billingCycle: 'Monthly'
-      },
-      companySize: 'Enterprise',
-      targetMarket: 'STR-only',
-      foundedYear: 2013,
-      rating: {
-        score: 4.2,
-        source: 'G2',
-        reviewCount: 678
-      },
-      keyFeatures: ['Multi-property Management', 'Team Collaboration', 'Advanced Reporting', 'API Integration'],
-      useCases: ['Property Management Companies', 'Large-scale Operations', 'Multi-team Coordination']
-    },
-    {
-      id: 'rec4',
-      name: 'ChannelManager.io',
-      subcategory: 'Channel Manager',
-      description: 'Multi-channel distribution platform connecting your property to 150+ booking channels worldwide.',
-      logoUrl: 'https://via.placeholder.com/120x120?text=CM',
-      websiteUrl: 'https://channelmanager.io',
-      tags: ['Channel Management', 'Distribution', 'Cross-over'],
-      region: 'Global',
-      integrations: ['Airbnb', 'VRBO', 'Booking.com', 'Hotels.com'],
-      pricing: {
-        model: 'Paid',
-        startingPrice: '$39',
-        currency: 'USD',
-        billingCycle: 'Monthly'
-      },
-      companySize: 'Mid-size',
-      targetMarket: 'Cross-over',
-      foundedYear: 2015,
-      rating: {
-        score: 4.1,
-        source: 'Capterra',
-        reviewCount: 189
-      },
-      keyFeatures: ['150+ Channels', 'Real-time Sync', 'Inventory Management', 'Rate Management'],
-      useCases: ['Multi-channel Distribution', 'Hotel Management', 'Vacation Rental Distribution']
-    },
-    {
-      id: 'rec5',
-      name: 'Smartbnb',
-      subcategory: 'Guest Communication',
-      description: 'Automated messaging and guest communication platform for Airbnb and vacation rental hosts.',
-      logoUrl: 'https://via.placeholder.com/120x120?text=SB',
-      websiteUrl: 'https://smartbnb.io',
-      tags: ['Guest Communication', 'Automation', 'STR-only'],
-      region: 'Global',
-      integrations: ['Airbnb', 'VRBO'],
-      pricing: {
-        model: 'Freemium',
-        startingPrice: '$19',
-        currency: 'USD',
-        billingCycle: 'Monthly'
-      },
-      companySize: 'Solo Host',
-      targetMarket: 'STR-only',
-      foundedYear: 2016,
-      rating: {
-        score: 4.4,
-        source: 'G2',
-        reviewCount: 123
-      },
-      keyFeatures: ['Automated Messaging', 'Guest Screening', 'Review Management', 'Multi-language Support'],
-      useCases: ['Guest Communication', 'Review Management', 'Check-in Automation']
-    },
-    {
-      id: 'rec6',
-      name: 'TurnoverBnB',
-      subcategory: 'Cleaning & Maintenance',
-      description: 'Cleaning and maintenance coordination platform specifically designed for vacation rental properties.',
-      logoUrl: 'https://via.placeholder.com/120x120?text=TB',
-      websiteUrl: 'https://turnoverbnb.com',
-      tags: ['Cleaning', 'Maintenance', 'Operations'],
-      region: 'US',
-      integrations: ['Airbnb', 'VRBO', 'Major PMS platforms'],
-      pricing: {
-        model: 'Paid',
-        startingPrice: '$25',
-        currency: 'USD',
-        billingCycle: 'Monthly'
-      },
-      companySize: 'Small Team',
-      targetMarket: 'STR-only',
-      foundedYear: 2017,
-      rating: {
-        score: 4.6,
-        source: 'Internal',
-        reviewCount: 89
-      },
-      keyFeatures: ['Cleaning Coordination', 'Maintenance Tracking', 'Vendor Management', 'Photo Verification'],
-      useCases: ['Cleaning Management', 'Maintenance Coordination', 'Property Inspections']
+  // Convert all STR providers to Tool format
+  const comprehensiveTools = strProviders.map((provider, index) => 
+    convertProviderToTool(provider, `str_${index + 1}`)
+  );
+
+  // Add some enhanced details to major providers
+  const enhancedTools = comprehensiveTools.map(tool => {
+    // Add realistic pricing, ratings, and enhanced details for major providers
+    if (tool.name === 'Hostfully') {
+      return {
+        ...tool,
+        foundedYear: 2012,
+        rating: { score: 4.5, source: 'G2' as const, reviewCount: 234 },
+        pricing: { model: 'Paid' as const, startingPrice: '$49', currency: 'USD', billingCycle: 'Monthly' as const }
+      };
     }
-  ];
+    if (tool.name === 'PriceLabs') {
+      return {
+        ...tool,
+        foundedYear: 2014,
+        rating: { score: 4.3, source: 'Capterra' as const, reviewCount: 456 },
+        pricing: { model: 'Freemium' as const, startingPrice: '$19.99', currency: 'USD', billingCycle: 'Monthly' as const }
+      };
+    }
+    if (tool.name === 'Guesty') {
+      return {
+        ...tool,
+        foundedYear: 2013,
+        rating: { score: 4.2, source: 'G2' as const, reviewCount: 678 },
+        pricing: { model: 'Enterprise' as const, startingPrice: 'Contact', currency: 'USD', billingCycle: 'Monthly' as const }
+      };
+    }
+    if (tool.name === 'AirDNA') {
+      return {
+        ...tool,
+        foundedYear: 2015,
+        rating: { score: 4.4, source: 'G2' as const, reviewCount: 312 },
+        pricing: { model: 'Paid' as const, startingPrice: '$99', currency: 'USD', billingCycle: 'Monthly' as const }
+      };
+    }
+    if (tool.name === 'Beyond Pricing') {
+      return {
+        ...tool,
+        foundedYear: 2013,
+        rating: { score: 4.1, source: 'Capterra' as const, reviewCount: 189 },
+        pricing: { model: 'Paid' as const, startingPrice: '$10', currency: 'USD', billingCycle: 'Per booking' as const }
+      };
+    }
+    if (tool.name === 'Smartbnb') {
+      return {
+        ...tool,
+        foundedYear: 2016,
+        rating: { score: 4.4, source: 'G2' as const, reviewCount: 123 },
+        pricing: { model: 'Freemium' as const, startingPrice: '$19', currency: 'USD', billingCycle: 'Monthly' as const }
+      };
+    }
+    if (tool.name === 'TurnoverBnB') {
+      return {
+        ...tool,
+        foundedYear: 2017,
+        rating: { score: 4.6, source: 'Internal' as const, reviewCount: 89 },
+        pricing: { model: 'Paid' as const, startingPrice: '$25', currency: 'USD', billingCycle: 'Monthly' as const }
+      };
+    }
+    if (tool.name === 'RemoteLock') {
+      return {
+        ...tool,
+        foundedYear: 2017,
+        rating: { score: 4.3, source: 'G2' as const, reviewCount: 156 },
+        pricing: { model: 'Paid' as const, startingPrice: '$19', currency: 'USD', billingCycle: 'Monthly' as const }
+      };
+    }
+
+    // Add basic ratings for other tools
+    const randomRating = 3.8 + Math.random() * 1.2; // Random rating between 3.8 and 5.0
+    const randomReviews = Math.floor(Math.random() * 300) + 50; // Random reviews between 50-350
+    const ratingSources = ['G2', 'Capterra', 'Internal'] as const;
+    const randomSource = ratingSources[Math.floor(Math.random() * ratingSources.length)];
+
+    return {
+      ...tool,
+      rating: {
+        score: Math.round(randomRating * 10) / 10,
+        source: randomSource,
+        reviewCount: randomReviews
+      }
+    };
+  });
+
+  return enhancedTools;
 }
