@@ -1,0 +1,45 @@
+STR Stack Scout - Project Description
+
+STR Stack Scout is a website that helps Airbnb and vacation rental owners find the best technology tools for their business.
+
+What it does:
+- Lists 150+ software tools that help people manage short-term rentals
+- Organizes tools by category like property management, pricing, guest communication, cleaning, etc.
+- Shows ratings, prices, and features so people can compare options
+- Lets users filter and search to find exactly what they need
+- Provides detailed information about each tool to help make decisions
+
+Who it's for:
+- Airbnb hosts (from people with 1 property to companies with hundreds)
+- Vacation rental managers
+- Property management companies
+- Anyone running short-term rentals who needs software to help them
+
+What makes it special:
+- Most comprehensive directory - way more tools than competitors
+- Professional, modern design that looks like a top tech company
+- Easy to use - people can quickly find what they need
+- Always updated with the latest tools and information
+- Optimized for Google so people can find it easily
+
+The business model:
+- Companies can submit their tools for free to be listed
+- Premium listings for featured placement (future revenue)
+- Affiliate partnerships with tool providers (future revenue)
+
+In simple terms: You built the "Google for vacation rental software" - the go-to place where anyone running an Airbnb or vacation rental goes to find the tools they need to succeed.
+
+It's like having a tech-savvy friend who knows every software tool in the industry and can recommend exactly what you need based on your situation.
+
+Technical Details:
+- Built with Next.js 15 and TypeScript
+- 150+ vetted STR technology providers
+- Modern UI with animations and interactive features
+- SEO optimized for global discovery
+- Mobile-responsive design
+- Advanced filtering and search capabilities
+- Tool comparison system
+- Comprehensive database of STR tools across 12+ categories
+
+Website: https://str-stack-scout.vercel.app
+GitHub: https://github.com/janitogeek/str-stack-scout
