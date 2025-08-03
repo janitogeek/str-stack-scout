@@ -20,8 +20,12 @@ export interface ProviderData {
 
 // Function to convert provider data to Tool format
 export function convertProviderToTool(provider: ProviderData, id?: string): Tool {
-  // Generate a simple ID if not provided
-  const toolId = id || `tool_${provider.name.toLowerCase().replace(/\s+/g, '_')}`;
+  // Generate a URL-safe ID if not provided
+  const toolId = id || `tool_${provider.name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '') // Remove special characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .substring(0, 50)}`; // Limit length
   
   // Map categories to our standardized subcategories
   const categoryMapping: Record<string, string> = {

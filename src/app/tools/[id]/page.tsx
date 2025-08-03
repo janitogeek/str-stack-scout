@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Tool } from '@/types/tool';
 import { getAllTools } from '@/lib/airtable';
-import Image from 'next/image';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage';
 
@@ -346,18 +345,15 @@ export default function ToolDetailPage() {
                   className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="relative w-10 h-10 flex-shrink-0">
-                      <Image
-                        src={relatedTool.logoUrl}
-                        alt={`${relatedTool.name} logo`}
-                        fill
-                        className="rounded object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = `https://via.placeholder.com/40x40?text=${relatedTool.name.charAt(0)}`;
-                        }}
-                      />
-                    </div>
+                    <OptimizedImage
+                      src={relatedTool.logoUrl}
+                      alt={`${relatedTool.name} logo`}
+                      width={40}
+                      height={40}
+                      className="w-10 h-10 rounded flex-shrink-0"
+                      fallbackText={relatedTool.name}
+                      sizes="40px"
+                    />
                     <div>
                       <h3 className="font-medium text-gray-900 text-sm">
                         {relatedTool.name}

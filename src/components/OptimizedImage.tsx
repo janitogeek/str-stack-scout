@@ -57,7 +57,7 @@ export default function OptimizedImage({
     <div className={`relative overflow-hidden ${className}`}>
       {/* Loading placeholder */}
       {isLoading && (
-        <div className={`absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center ${className}`}>
+        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
           <div className="w-1/2 h-1/2 bg-gray-300 rounded"></div>
         </div>
       )}
@@ -66,10 +66,10 @@ export default function OptimizedImage({
       <Image
         src={src}
         alt={alt}
-        width={width}
-        height={height}
+        width={fill ? undefined : width || 64}
+        height={fill ? undefined : height || 64}
         fill={fill}
-        className={`object-cover transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${className}`}
+        className={`object-cover transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
         onError={handleImageError}
         onLoad={handleImageLoad}
         priority={priority}

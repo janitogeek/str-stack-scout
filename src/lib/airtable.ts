@@ -83,10 +83,16 @@ export async function getToolsBySubcategory(subcategory: string): Promise<Tool[]
 
 // Mock data for development and testing - now includes comprehensive STR provider database
 function getMockTools(): Tool[] {
-  // Convert all STR providers to Tool format
-  const comprehensiveTools = strProviders.map((provider, index) => 
-    convertProviderToTool(provider, `str_${index + 1}`)
-  );
+  // Convert all STR providers to Tool format with URL-safe IDs
+  const comprehensiveTools = strProviders.map((provider, index) => {
+    const urlSafeId = `str-${provider.name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, '') // Remove special characters
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .substring(0, 30)}-${index + 1}`; // Include index for uniqueness
+    
+    return convertProviderToTool(provider, urlSafeId);
+  });
 
   // Add some enhanced details to major providers
   const enhancedTools = comprehensiveTools.map(tool => {
