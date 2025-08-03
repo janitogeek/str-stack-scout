@@ -1,6 +1,6 @@
 import { Tool } from '@/types/tool';
-import Image from 'next/image';
 import Link from 'next/link';
+import OptimizedImage from './OptimizedImage';
 
 interface ToolCardProps {
   tool: Tool;
@@ -85,44 +85,46 @@ function TargetMarketBadge({ targetMarket }: { targetMarket: Tool['targetMarket'
 }
 
 export default function ToolCard({ tool, onCompare, isComparing = false }: ToolCardProps) {
+
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 border border-gray-200">
+    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6 border border-gray-200 group">
       <div className="flex flex-col h-full">
-        {/* Header with Logo, Name and Badges */}
-        <div className="flex items-start gap-4 mb-4">
-          <div className="relative w-16 h-16 flex-shrink-0">
-            <Image
+        {/* Clickable Header - Links to Tool Detail Page */}
+        <Link href={`/tools/${tool.id}`} className="block">
+          <div className="flex items-start gap-4 mb-4 group-hover:transform group-hover:scale-[1.02] transition-transform duration-200">
+            <OptimizedImage
               src={tool.logoUrl}
               alt={`${tool.name} logo`}
-              fill
-              className="rounded-lg object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = `https://via.placeholder.com/64x64?text=${tool.name.charAt(0)}`;
-              }}
+              width={64}
+              height={64}
+              className="w-16 h-16 rounded-lg flex-shrink-0"
+              fallbackText={tool.name}
+              sizes="64px"
             />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2 mb-2">
-              <h3 className="text-lg font-semibold text-gray-900 truncate flex-1">
-                {tool.name}
-              </h3>
-              <TargetMarketBadge targetMarket={tool.targetMarket} />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 truncate flex-1 group-hover:text-blue-600 transition-colors">
+                  {tool.name}
+                </h3>
+                <TargetMarketBadge targetMarket={tool.targetMarket} />
+              </div>
+              <p className="text-sm text-gray-600 truncate mb-2">
+                {tool.subcategory}
+              </p>
+              <div className="flex items-center justify-between">
+                <RatingDisplay rating={tool.rating} />
+                <PricingBadge pricing={tool.pricing} />
+              </div>
             </div>
-            <p className="text-sm text-gray-600 truncate mb-2">
-              {tool.subcategory}
-            </p>
-            <div className="flex items-center justify-between">
-              <RatingDisplay rating={tool.rating} />
-              <PricingBadge pricing={tool.pricing} />
-            </div>
           </div>
-        </div>
+        </Link>
 
-        {/* Description */}
-        <p className="text-gray-700 text-sm mb-4 flex-1 line-clamp-3">
-          {tool.description}
-        </p>
+        {/* Description - Also Clickable */}
+        <Link href={`/tools/${tool.id}`} className="block flex-1 mb-4">
+          <p className="text-gray-700 text-sm line-clamp-3 hover:text-gray-900 transition-colors">
+            {tool.description}
+          </p>
+        </Link>
 
         {/* Key Features */}
         {tool.keyFeatures && tool.keyFeatures.length > 0 && (
@@ -199,10 +201,30 @@ export default function ToolCard({ tool, onCompare, isComparing = false }: ToolC
         {/* Action Buttons */}
         <div className="mt-auto space-y-2">
           <Link
+            href={`/tools/${tool.id}`}
+            className="inline-flex items-center justify-center w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          >
+            View Details
+            <svg
+              className="ml-2 w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </Link>
+          
+          <Link
             href={tool.websiteUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            className="inline-flex items-center justify-center w-full px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
           >
             Visit Website
             <svg

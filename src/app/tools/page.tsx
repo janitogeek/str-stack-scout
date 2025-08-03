@@ -106,17 +106,44 @@ function ToolsContent() {
       );
     }
 
-    // Filter by search term
+    // Filter by search term with enhanced matching
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(tool =>
-        tool.name.toLowerCase().includes(searchLower) ||
-        tool.subcategory.toLowerCase().includes(searchLower) ||
-        tool.description.toLowerCase().includes(searchLower) ||
-        tool.tags.some(tag => tag.toLowerCase().includes(searchLower)) ||
-        tool.keyFeatures?.some(feature => feature.toLowerCase().includes(searchLower)) ||
-        tool.useCases?.some(useCase => useCase.toLowerCase().includes(searchLower))
-      );
+      
+      // Define category aliases for better matching
+      const categoryAliases: { [key: string]: string[] } = {
+        'property management system (pms)': ['pms', 'property management', 'property management system'],
+        'channel manager': ['cm', 'channel management', 'distribution'],
+        'revenue management': ['rm', 'revenue optimization', 'dynamic pricing', 'pricing'],
+        'smart home & iot': ['iot', 'smart home', 'automation', 'smart locks'],
+        'guest communication': ['communication', 'messaging', 'guest experience'],
+        'cleaning & maintenance': ['cleaning', 'maintenance', 'housekeeping', 'turnover'],
+        'analytics & reporting': ['analytics', 'reporting', 'data', 'insights'],
+        'accounting & finance': ['accounting', 'finance', 'payments', 'financial'],
+        'marketing & seo': ['marketing', 'seo', 'website', 'digital marketing'],
+        'insurance': ['protection', 'coverage'],
+        'guest experience': ['experience', 'concierge', 'services']
+      };
+
+      filtered = filtered.filter(tool => {
+        // Standard field matching
+        const standardMatch = 
+          tool.name.toLowerCase().includes(searchLower) ||
+          tool.subcategory.toLowerCase().includes(searchLower) ||
+          tool.description.toLowerCase().includes(searchLower) ||
+          tool.tags.some(tag => tag.toLowerCase().includes(searchLower)) ||
+          tool.keyFeatures?.some(feature => feature.toLowerCase().includes(searchLower)) ||
+          tool.useCases?.some(useCase => useCase.toLowerCase().includes(searchLower));
+
+        // Enhanced category matching using aliases
+        const categoryKey = tool.subcategory.toLowerCase();
+        const aliases = categoryAliases[categoryKey] || [];
+        const aliasMatch = aliases.some(alias => 
+          alias.includes(searchLower) || searchLower.includes(alias)
+        );
+
+        return standardMatch || aliasMatch;
+      });
     }
 
     return filtered;
