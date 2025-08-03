@@ -19,7 +19,7 @@ export default function PartnerPage() {
             
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Partnership Program Coming Soon</h2>
             <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-              We're developing a comprehensive partnership program for STR technology providers, 
+              We&apos;re developing a comprehensive partnership program for STR technology providers, 
               consultants, and industry experts. Join our network to reach thousands of potential customers.
             </p>
             
