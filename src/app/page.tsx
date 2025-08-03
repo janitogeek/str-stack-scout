@@ -9,6 +9,7 @@ import { CategoryShowcase } from '@/components/CategoryShowcase';
 import { FeaturedTools } from '@/components/FeaturedTools';
 import { TrustIndicators } from '@/components/TrustIndicators';
 import { NewsletterCTA } from '@/components/NewsletterCTA';
+import Glossary from '@/components/Glossary';
 
 export default function HomePage() {
   const [tools, setTools] = useState<Tool[]>([]);
@@ -119,6 +120,9 @@ export default function HomePage() {
 
       {/* Trust Indicators */}
       <TrustIndicators />
+
+      {/* STR Industry Glossary */}
+      <Glossary />
 
       {/* Newsletter CTA */}
       <NewsletterCTA />

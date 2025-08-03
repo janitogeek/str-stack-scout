@@ -286,6 +286,54 @@ export const strProviders: ProviderData[] = [
   { name: "RealVoice", category: "Guest Communication", description: "Voice communication platform", website: "https://realvoice.com", tags: ["Voice Communication", "Platform"], targetMarket: "STR-only", companySize: "Mid-size" },
   { name: "Xplorie", category: "Guest Communication", description: "Guest experience platform", website: "https://xplorie.com", tags: ["Guest Experience", "Platform"], targetMarket: "STR-only", companySize: "Mid-size" },
 
+  // OTAs (Online Travel Agencies)
+  { name: "Airbnb", category: "Channel Manager", description: "Global vacation rental marketplace", website: "https://airbnb.com", tags: ["OTA", "Marketplace", "Global"], targetMarket: "STR-only", companySize: "Enterprise" },
+  { name: "Booking.com", category: "Channel Manager", description: "Global accommodation booking platform", website: "https://booking.com", tags: ["OTA", "Global", "Cross-over"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Expedia", category: "Channel Manager", description: "Global travel booking platform", website: "https://expedia.com", tags: ["OTA", "Travel", "Global"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "VRBO", category: "Channel Manager", description: "Vacation rental booking platform", website: "https://vrbo.com", tags: ["OTA", "Vacation Rentals"], targetMarket: "STR-only", companySize: "Enterprise" },
+  { name: "HomeToGo", category: "Channel Manager", description: "Vacation rental search and booking", website: "https://hometogo.com", tags: ["OTA", "Search Engine"], targetMarket: "STR-only", companySize: "Enterprise" },
+  { name: "Hopper", category: "Channel Manager", description: "Travel booking and price prediction", website: "https://hopper.com", tags: ["OTA", "Price Prediction"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Trip.com", category: "Channel Manager", description: "Global travel booking platform", website: "https://trip.com", tags: ["OTA", "Global", "Travel"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Traveloka", category: "Channel Manager", description: "Southeast Asia travel platform", website: "https://traveloka.com", tags: ["OTA", "Southeast Asia"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Plum Guide", category: "Channel Manager", description: "Curated vacation rental platform", website: "https://plumguide.com", tags: ["OTA", "Curated", "Premium"], targetMarket: "STR-only", companySize: "Mid-size" },
+
+  // Metasearch Engines
+  { name: "Google Travel", category: "Channel Manager", description: "Google's travel search and booking", website: "https://travel.google.com", tags: ["Metasearch", "Global", "Search"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Trivago", category: "Channel Manager", description: "Hotel and accommodation comparison", website: "https://trivago.com", tags: ["Metasearch", "Comparison"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Tripadvisor", category: "Channel Manager", description: "Travel reviews and booking", website: "https://tripadvisor.com", tags: ["Metasearch", "Reviews"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Cozzycozy", category: "Channel Manager", description: "Vacation rental metasearch", website: "https://cozzycozy.com", tags: ["Metasearch", "Vacation Rentals"], targetMarket: "STR-only", companySize: "Mid-size" },
+  { name: "Likibu", category: "Channel Manager", description: "Vacation rental comparison platform", website: "https://likibu.com", tags: ["Metasearch", "Comparison"], targetMarket: "STR-only", companySize: "Mid-size" },
+  { name: "Holidu", category: "Channel Manager", description: "Vacation rental search engine", website: "https://holidu.com", tags: ["Metasearch", "Search Engine"], targetMarket: "STR-only", companySize: "Enterprise" },
+
+  // General Website Builders & Platforms
+  { name: "WordPress", category: "Marketing & SEO", description: "Content management and website platform", website: "https://wordpress.com", tags: ["Website Builder", "CMS", "Multi-industry"], targetMarket: "Multi-industry", companySize: "Enterprise" },
+  { name: "Squarespace", category: "Marketing & SEO", description: "Website builder and hosting platform", website: "https://squarespace.com", tags: ["Website Builder", "Design"], targetMarket: "Multi-industry", companySize: "Enterprise" },
+  { name: "Webflow", category: "Marketing & SEO", description: "Visual web design and development platform", website: "https://webflow.com", tags: ["Website Builder", "Design", "Development"], targetMarket: "Multi-industry", companySize: "Enterprise" },
+  { name: "Duda", category: "Marketing & SEO", description: "Professional website builder", website: "https://duda.com", tags: ["Website Builder", "Professional"], targetMarket: "Multi-industry", companySize: "Enterprise" },
+  { name: "Jimdo", category: "Marketing & SEO", description: "Website builder and e-commerce", website: "https://jimdo.com", tags: ["Website Builder", "E-commerce"], targetMarket: "Multi-industry", companySize: "Mid-size" },
+  { name: "SiteBuilder", category: "Marketing & SEO", description: "Drag-and-drop website builder", website: "https://sitebuilder.com", tags: ["Website Builder", "Drag-and-drop"], targetMarket: "Multi-industry", companySize: "Mid-size" },
+
+  // Payment & Financial Platforms
+  { name: "Stripe", category: "Accounting & Finance", description: "Online payment processing platform", website: "https://stripe.com", tags: ["Payment Processing", "Global"], targetMarket: "Multi-industry", companySize: "Enterprise" },
+
+  // Enhanced Channel Management
+  { name: "Alloggio", category: "Channel Manager", description: "Standalone channel management", website: "https://alloggio.com", tags: ["Channel Manager", "Standalone"], targetMarket: "Cross-over", companySize: "Mid-size" },
+  { name: "BookingSync", category: "Channel Manager", description: "Channel management and synchronization", website: "https://bookingsync.com", tags: ["Channel Manager", "Sync"], targetMarket: "STR-only", companySize: "Mid-size" },
+  { name: "SiteMinder", category: "Channel Manager", description: "Hotel and accommodation distribution", website: "https://siteminder.com", tags: ["Channel Manager", "Distribution"], targetMarket: "Cross-over", companySize: "Enterprise" },
+  { name: "Talkguest", category: "Channel Manager", description: "Channel management platform", website: "https://talkguest.com", tags: ["Channel Manager"], targetMarket: "STR-only", companySize: "Mid-size" },
+
+  // Additional Platform Tools
+  { name: "Anytime", category: "Marketing & SEO", description: "Website builder for vacation rentals", website: "https://anytime.com", tags: ["Website Builder", "STR-focused"], targetMarket: "STR-only", companySize: "Mid-size" },
+  { name: "Eviivo", category: "Property Management System (PMS)", description: "Bed & breakfast and small hotel management", website: "https://eviivo.com", tags: ["PMS", "B&B", "Small Hotels"], targetMarket: "Cross-over", companySize: "Mid-size" },
+  { name: "Futurestay", category: "Property Management System (PMS)", description: "Vacation rental management and websites", website: "https://futurestay.com", tags: ["PMS", "Website Builder"], targetMarket: "STR-only", companySize: "Mid-size" },
+  { name: "Tokee", category: "Marketing & SEO", description: "Website builder and booking system", website: "https://tokee.com", tags: ["Website Builder", "Booking"], targetMarket: "STR-only", companySize: "Small Team" },
+  { name: "Guestline", category: "Property Management System (PMS)", description: "Hotel and accommodation management", website: "https://guestline.com", tags: ["PMS", "Hotels"], targetMarket: "Cross-over", companySize: "Enterprise" },
+
+  // Standalone Dynamic Pricing
+  { name: "Beyond Pricing", category: "Revenue Management", description: "Automated dynamic pricing for vacation rentals", website: "https://beyondpricing.com", tags: ["Dynamic Pricing", "Automated"], targetMarket: "STR-only", companySize: "Mid-size" },
+  { name: "Dynamic Pricing", category: "Revenue Management", description: "AI-powered pricing optimization", website: "https://dynamicpricing.com", tags: ["AI Pricing", "Optimization"], targetMarket: "STR-only", companySize: "Mid-size" },
+  { name: "Analytics", category: "Analytics & Reporting", description: "Data analytics platform", website: "https://analytics.com", tags: ["Analytics", "Data"], targetMarket: "Multi-industry", companySize: "Enterprise" },
+
   // Ancillary Services
   { name: "BabyQuip", category: "Guest Experience", description: "Baby equipment rental service", website: "https://babyquip.com", tags: ["Baby Equipment", "Rental"], targetMarket: "STR-only", companySize: "Mid-size" },
   { name: "Bounce", category: "Guest Experience", description: "Luggage storage and services", website: "https://bounce.com", tags: ["Luggage Storage", "Services"], targetMarket: "Cross-over", companySize: "Mid-size" },
