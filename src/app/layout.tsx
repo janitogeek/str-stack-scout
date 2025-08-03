@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import { Analytics } from "@/components/Analytics";
 import { StructuredData } from "@/components/StructuredData";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -163,9 +164,10 @@ export default function RootLayout({
         <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/dm-sans-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
-      <body className={`${inter.variable} ${dmSans.variable} font-sans antialiased min-h-screen bg-gray-50`}>
+      <body className={`${inter.variable} ${dmSans.variable} font-sans antialiased min-h-screen bg-gray-50 flex flex-col`}>
         <Navigation />
-        <main id="main-content" role="main">{children}</main>
+        <main id="main-content" role="main" className="flex-1">{children}</main>
+        <Footer />
         <Analytics />
         
         {/* Accessibility skip link */}
